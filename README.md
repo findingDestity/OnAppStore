@@ -2,7 +2,7 @@
 </br>
 This a demo application showing how programmatically find an application on the <i>App Store</i>, retrieve the available technical information about this app and call <i>StoreKit</i> View Controller to show the app on the <i>App Store</i>.
 </br>
-![Alt text](https://github.com/PavelGnatyuk/OnAppStore.git/master/screenshot.PNG "Application screenshot")
+![Alt text](https://github.com/PavelGnatyuk/OnAppStore.git/screenshot.PNG "Application screenshot")
 </br>
 <i>Apple Search API</i> allows me to retrieve information about the application. For example, the following line will bring info about all applications that has "hello" in their name:
 <pre><code>https://itunes.apple.com/search?term=hello&country=il&entity=software
