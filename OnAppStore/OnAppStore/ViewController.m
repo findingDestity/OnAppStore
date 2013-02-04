@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import <StoreKit/StoreKit.h>
 
 @interface ViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -80,7 +81,7 @@
                 [label setText:item[@"artistName"]];
 
                 label = (UILabel *)[cell viewWithTag:10003];
-                [label setText:[NSString stringWithFormat:@"%i", [item[@"trackId"] integerValue]]];
+                [label setText:[NSString stringWithFormat:@"Rating: %@", item[@"contentAdvisoryRating"]]];
             }
         }
     }
@@ -95,6 +96,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *item = [self content][[indexPath row]];
+    if ( item ) {
+        NSNumber *appleID = item[@"trackId"];
+        if ( appleID ) {
+            [self showAppStoreOf:[appleID description]];
+        }
+    }
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -112,7 +120,6 @@
 
 - (void)searchFor:(NSString *)appleApp
 {
-    
     NSString *nameEncoded = [self URLEncodedString:appleApp];
     NSString *storeString = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&country=il&entity=software", nameEncoded];
     NSURL *storeURL = [NSURL URLWithString:storeString];
@@ -159,6 +166,23 @@
         }
     }];
     [queue release];
+}
+
+- (void)showAppStoreOf:(NSString *)appleID
+{
+    if ( [SKStoreProductViewController class] ) {
+        SKStoreProductViewController *productController = [[SKStoreProductViewController alloc] init];
+        productController.delegate = (id<SKStoreProductViewControllerDelegate>)self;
+        NSDictionary *productParameters = @{SKStoreProductParameterITunesItemIdentifier:appleID};
+        [productController loadProductWithParameters:productParameters completionBlock:NULL];
+        
+        [self presentViewController:productController animated:YES completion:nil];
+    }
+}
+
+- (void)productViewControllerDidFinish:(SKStoreProductViewController *)controller
+{
+    [controller.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end
