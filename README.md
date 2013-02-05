@@ -3,6 +3,7 @@
 This a demo application showing how programmatically find an application on the <i>App Store</i>, retrieve the available technical information about this app and call <i>StoreKit</i> View Controller to show the app on the <i>App Store</i>.
 </br>
 ![Alt text](screenshot.PNG "Application screenshot")
+
 </br>
 <i>Apple Search API</i> allows me to retrieve information about the application. For example, the following line will bring info about all applications that has "hello" in their name:
 <pre><code>https://itunes.apple.com/search?term=hello&country=il&entity=software
@@ -13,6 +14,7 @@ The response is a simple JSON like:
  "results": [here is an array of all apps that have "hello"]
 }</code></pre>
 <i>50</i> - is a default value, it can be 200 maximum if you'll set in the request.
+</br>
 <i>results</i> - is an array where each record is a dictionary describing an application.
 </br>In this dictionary the "trackId" item is the Apple Apple ID that can be used in the Store Kit to display the application exactly as iTunes does it, so the user may download, update, rate or write a review for this app in the standard way.
 </br>
@@ -24,7 +26,11 @@ NSDictionary *productParameters = @{SKStoreProductParameterITunesItemIdentifier:
         
 [self presentViewController:productController animated:YES completion:nil];
 </code></pre>
-###Reference:
+</br>This code is valid for iOS 6, for the previous versions the following code will call iTunes on the page of the application determined with appleID:
+<pre><code>NSString *reviewURL = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appleID];
+[[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];</code></pre>
+</br>
+###References:
 <ol>
 <li><a href="http://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html">Apple Search API </a></li>
 <li><a href="http://developer.apple.com/library/ios/#documentation/StoreKit/Reference/SKITunesProductViewController_Ref/Introduction/Introduction.html">SKStoreProductViewController Class Reference</a></li>
