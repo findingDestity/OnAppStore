@@ -29,9 +29,9 @@ NSDictionary *productParameters = @{SKStoreProductParameterITunesItemIdentifier:
 </br>This code is valid for iOS 6, for the previous versions the following code will call iTunes on the page of the application determined with appleID:
 <pre><code>
         NSString *reviewURL = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appleID];
- 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];</code><pre>
+ 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];</code></pre>
 </br>
-##References:
+###References:
 <ol>
 <li><a href="http://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html">Apple Search API </a></li>
 <li><a href="http://developer.apple.com/library/ios/#documentation/StoreKit/Reference/SKITunesProductViewController_Ref/Introduction/Introduction.html">SKStoreProductViewController Class Reference</a></li>
