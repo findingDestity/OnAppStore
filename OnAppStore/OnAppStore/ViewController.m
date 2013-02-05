@@ -170,13 +170,17 @@
 
 - (void)showAppStoreOf:(NSString *)appleID
 {
-    if ( [SKStoreProductViewController class] ) {
+    if ( [SKStoreProductViewController class]) {
         SKStoreProductViewController *productController = [[SKStoreProductViewController alloc] init];
         productController.delegate = (id<SKStoreProductViewControllerDelegate>)self;
         NSDictionary *productParameters = @{SKStoreProductParameterITunesItemIdentifier:appleID};
         [productController loadProductWithParameters:productParameters completionBlock:NULL];
         
         [self presentViewController:productController animated:YES completion:nil];
+    }
+    else {
+        NSString *reviewURL = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appleID];
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
     }
 }
 
